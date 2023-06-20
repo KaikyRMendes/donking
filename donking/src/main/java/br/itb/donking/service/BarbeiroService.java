@@ -4,6 +4,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import br.itb.donking.model.Barbeiro;
 import br.itb.donking.model.BarbeiroRepository;
+import jakarta.transaction.Transactional;
 
 
 @Service
@@ -23,6 +24,7 @@ public class BarbeiroService {
 		}
 		
 	// Insert into barbeiro...
+		@Transactional
 		public Barbeiro save (Barbeiro barbeiro) {
 			return barbeiroRepository.save(barbeiro);
 		}
