@@ -1,4 +1,4 @@
-package com.donking.donking;
+package br.itb.donking;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
