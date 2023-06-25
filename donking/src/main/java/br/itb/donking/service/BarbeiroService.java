@@ -1,9 +1,12 @@
 package br.itb.donking.service;
 
 import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import br.itb.donking.model.Barbeiro;
-import br.itb.donking.model.BarbeiroRepository;
+
+import br.itb.donking.entity.Barbeiro;
+import br.itb.donking.repository.BarbeiroRepository;
 import jakarta.transaction.Transactional;
 
 
@@ -11,21 +14,29 @@ import jakarta.transaction.Transactional;
 public class BarbeiroService {
 
 	// objeto repository
-	final BarbeiroRepository barbeiroRepository;
+	@Autowired
+	private BarbeiroRepository barbeiroRepository;
+
 	
-	// Injeção de dependência
-	public BarbeiroService(BarbeiroRepository _barbeiroRepository) {
-		this.barbeiroRepository = _barbeiroRepository;
-	}
-	
-	// Método SELECT * FROM PRODUTO
-		public List<Barbeiro> findAll(){
+	// Método SELECT * FROM BARBEIRO
+		public List<Barbeiro> buscarAllBarbeiros(){
 			return barbeiroRepository.findAll();
 		}
 		
 	// Insert into barbeiro...
 		@Transactional
-		public Barbeiro save (Barbeiro barbeiro) {
-			return barbeiroRepository.save(barbeiro);
+		public Barbeiro inserir(Barbeiro barbeiro) { 
+			return barbeiroRepository.saveAndFlush(barbeiro);
+		}
+		
+	// Alterar	
+		public Barbeiro alterar(Barbeiro barbeiro) {
+			return barbeiroRepository.saveAndFlush(barbeiro);
+		}
+		
+	//Delete
+		public void excluir(Long id) {
+			Barbeiro barbeiro = barbeiroRepository.findById(id).get();
+			barbeiroRepository.delete(barbeiro);
 		}
 }

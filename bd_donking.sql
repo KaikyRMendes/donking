@@ -1,16 +1,16 @@
-/*USE MASTER IF EXISTS(SELECT * FROM SYS.databases WHERE NAME = 'bdBarbearia')
-DROP DATABASE bdBarbearia
+/*USE MASTER IF EXISTS(SELECT * FROM SYS.databases WHERE NAME = 'donking')
+DROP DATABASE donking
 GO
 
-CREATE DATABASE bdBarbearia
+CREATE DATABASE donking
 GO
 
-USE bdBarbearia
+USE donking
 GO*/
 
 -- CRIAR UMA NOVA TABELA
 
-CREATE TABLE Barbeiro
+CREATE TABLE Usuario
 (
 	 -- IDENTITY: campo auto numerico
 	ID INT IDENTITY,
@@ -27,6 +27,25 @@ CREATE TABLE Barbeiro
 )
 GO
 
+
+CREATE TABLE Barbeiro
+(
+	 -- IDENTITY: campo auto numerico
+	ID INT IDENTITY,
+	NOME        VARCHAR(100) NOT NULL,
+	TELEFONE	VARCHAR(11)NOT NULL,
+	EMAIL	    VARCHAR(100)NOT NULL,
+	SENHA		VARCHAR(50)NOT NULL,
+	/*dataNasc    date NULL,  FOI ANULADO POR ENQUANTO POIS TAVA DANDO ERRO NO POST*/
+	nivelAcesso VARCHAR(10)NULL,
+	status      VARCHAR(7)NOT NULL,  /* ativo ou inativo */ 
+	/*FOTO		VARBINARY(max) NULL, FOI ANULADO POR ENQUANTO POIS TAVA DANDO ERRO NO POST*/
+
+	-- PRIMARY KEY: chave primeria
+	PRIMARY KEY(ID)
+)
+GO
+
 CREATE TABLE Cliente
 (
 	ID INT IDENTITY (10, 1),
@@ -35,6 +54,7 @@ CREATE TABLE Cliente
 	EMAIL	    VARCHAR(100)NULL,
 	SENHA		VARCHAR(50)NOT NULL,
 	dataNasc    date NULL,
+	STATUS      VARCHAR(7) NOT NULL,  /* ativo ou inativo */ 
 	FOTO		VARBINARY(max) NULL,
 
 	PRIMARY KEY(ID)
@@ -49,7 +69,7 @@ GO
 	DESCRICAO    VARCHAR(50) NULL,
 	TEMPO        VARCHAR(30) NOT NULL,
 	PRECO        DECIMAL(8,2) NOT NULL,
-	STATUS       BIT NOT NULL,
+	STATUS       BIT NOT NULL, /* 0 = ativo 1 = inativo/desativado */
 	
 	-- PRIMARY KEY: chave primaria
 	PRIMARY KEY (ID)
@@ -161,16 +181,16 @@ GO
 INSERT INTO Servico VALUES ('Sobrancelha','Sobrancelha na Navalha','10min','5','')
 GO
 
-INSERT INTO Barbeiro VALUES ('Aquiles','1121326196','12345','donking01@gmail.com',NULL,'Barbeiro',NULL)
+INSERT INTO Barbeiro VALUES ('Aquiles','1121326196','aquiles@gmail.com','12345','Barbeiro', 'ATIVO')
 GO
-INSERT INTO Barbeiro VALUES('Kaiky','152754985','54321','donking02@gmail.com',NULL,'ADM',NULL)
+INSERT INTO Barbeiro VALUES('Kaiky','152754985','kaiky@gmail.com','54321','ADM', 'ATIVO')
 GO
 
-INSERT INTO Cliente VALUES ('Jhonata','1121784596','jhow123','jhow_cli@gmail.com',NULL,NULL)
+INSERT INTO Cliente VALUES ('Jhonata','1121784596','jhow@gmail.com','jhow123',NULL,'ATIVO', NULL)
 GO
-INSERT INTO Cliente VALUES('Gustavo','152036784','guxta','guxta_cli@hotmail.com',NULL,NULL)
+INSERT INTO Cliente VALUES('Gustavo','152036784','gusta@hotmail.com','gu123',NULL,'INATIVO', NULL)
 GO
-INSERT INTO Cliente VALUES('Guilherme','115254985','gui123','guilher_cli@gmail.com',NULL,NULL)
+INSERT INTO Cliente VALUES('Guilherme','115254985','gui@gmail.com','gui123',NULL,'ATIVO', NULL)
 GO
 
 INSERT INTO Forma_Pagamento VALUES('DINHEIRO')
@@ -206,7 +226,7 @@ INSERT INTO Pagamento_Barbearia VALUES (1, 3, 12, 5)
 GO
 
 
-
+SELECT * FROM Usuario
 SELECT * FROM Servico
 SELECT * FROM Barbeiro
 SELECT * FROM Cliente
